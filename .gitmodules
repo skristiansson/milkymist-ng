@@ -1,3 +1,6 @@
 [submodule "verilog/lm32/submodule"]
 	path = verilog/lm32/submodule
 	url = git://github.com/milkymist/lm32.git
+[submodule "verilog/mor1kx/submodule"]
+	path = verilog/mor1kx/submodule
+	url = git://github.com/openrisc/mor1kx.git
