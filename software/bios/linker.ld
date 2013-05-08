@@ -1,4 +1,4 @@
-OUTPUT_FORMAT("elf32-lm32")
+OUTPUT_FORMAT("elf32-or1k")
 ENTRY(_start)
 
 __DYNAMIC = 0;

@@ -7,7 +7,7 @@ from migen.fhdl.module import Module
 from migen.bus import wishbone, wishbone2asmi, csr, wishbone2csr, dfi
 from migen.bank import csrgen
 
-from milkymist import m1crg, lm32, norflash, uart, s6ddrphy, dfii, asmicon, \
+from milkymist import m1crg, mor1kx, norflash, uart, s6ddrphy, dfii, asmicon, \
 	identifier, timer, minimac3, framebuffer, asmiprobe, dvisampler
 from cif import get_macros
 
@@ -80,9 +80,9 @@ class SoC(Module):
 	}
 
 	interrupt_map = {
-		"uart":			0,
-		"timer0":		1,
-		"minimac":		2,
+		"uart":			2,
+		"timer0":		3,
+		"minimac":		4,
 	}
 
 	def __init__(self, platform):
@@ -107,7 +107,7 @@ class SoC(Module):
 		#
 		# WISHBONE
 		#
-		self.submodules.cpu = lm32.LM32()
+		self.submodules.cpu = mor1kx.MOR1KX()
 		self.submodules.norflash = norflash.NorFlash(platform.request("norflash"), 12)
 		self.submodules.sram = wishbone.SRAM(sram_size)
 		self.submodules.minimac = minimac3.MiniMAC(platform.request("eth"))

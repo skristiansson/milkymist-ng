@@ -10,7 +10,7 @@
 static void cdelay(int i)
 {
 	while(i > 0) {
-		__asm__ volatile("nop");
+		__asm__ volatile("l.nop");
 		i--;
 	}
 }

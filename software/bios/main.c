@@ -226,6 +226,7 @@ static void rcsr(char *csr)
 		return;
 	}
 
+#if 0
 	switch(csr2) {
 		case CSR_IE:   asm volatile ("rcsr %0,ie":"=r"(value)); break;
 		case CSR_IM:   asm volatile ("rcsr %0,im":"=r"(value)); break;
@@ -238,6 +239,9 @@ static void rcsr(char *csr)
 		case CSR_JRX:  asm volatile ("rcsr %0,jrx":"=r"(value)); break;
 		default: printf("csr write only\n"); return;
 	}
+#else
+	printf("csr read not supported\n");
+#endif
 
 	printf("%08x\n", value);
 }
@@ -264,6 +268,7 @@ static void wcsr(char *csr, char *value)
 		return;
 	}
 
+#if 0
 	switch(csr2) {
 		case CSR_IE:   asm volatile ("wcsr ie,%0"::"r"(value2)); break;
 		case CSR_IM:   asm volatile ("wcsr im,%0"::"r"(value2)); break;
@@ -284,6 +289,9 @@ static void wcsr(char *csr, char *value)
 		case CSR_WP3:  asm volatile ("wcsr wp3,%0"::"r"(value2)); break;
 		default: printf("csr read only\n"); return;
 	}
+#else
+	printf("csr write not supported\n");
+#endif
 }
 
 static void dfs(char *baseaddr)

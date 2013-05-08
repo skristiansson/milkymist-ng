@@ -56,17 +56,9 @@ NET "{dviclk1}" TNM_NET = "GRPdviclk1";
 NET "{dviclk1}" CLOCK_DEDICATED_ROUTE = FALSE;
 TIMESPEC "TSdviclk1" = PERIOD "GRPdviclk1" 26.7 ns HIGH 50%;
 """, dviclk1=platform.lookup_request("dvi_in", 1).clk)
-	
-	for d in ["m1crg", "s6ddrphy", "minimac3"]:
+	mor1kx_dir = os.path.join("mor1kx", "submodule", "rtl", "verilog")
+	for d in ["m1crg", "s6ddrphy", "minimac3", mor1kx_dir]:
 		platform.add_source_dir(os.path.join("verilog", d))
-	platform.add_sources(os.path.join("verilog", "lm32", "submodule", "rtl"), 
-		"lm32_cpu.v", "lm32_instruction_unit.v", "lm32_decoder.v",
-		"lm32_load_store_unit.v", "lm32_adder.v", "lm32_addsub.v", "lm32_logic_op.v",
-		"lm32_shifter.v", "lm32_multiplier.v", "lm32_mc_arithmetic.v",
-		"lm32_interrupt.v", "lm32_ram.v", "lm32_dp_ram.v", "lm32_icache.v",
-		"lm32_dcache.v", "lm32_top.v", "lm32_debug.v", "lm32_jtag.v", "jtag_cores.v",
-		"jtag_tap_spartan6.v", "lm32_itlb.v", "lm32_dtlb.v")
-	platform.add_sources(os.path.join("verilog", "lm32"), "lm32_config.v")
 
 	platform.build_cmdline(soc)
 	csr_header = cif.get_csr_header(soc.csr_base, soc.csrbankarray, soc.interrupt_map)

@@ -1,5 +1,6 @@
 #ifndef __IRQ_H
 #define __IRQ_H
+#include <system.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -7,33 +8,30 @@ extern "C" {
 
 static inline unsigned int irq_getie(void)
 {
-       unsigned int ie;
-       __asm__ __volatile__("rcsr %0, IE" : "=r" (ie));
-       return ie;
+	return !!(mfspr(SPR_SR) & SPR_SR_IEE);
 }
 
 static inline void irq_setie(unsigned int ie)
 {
-       __asm__ __volatile__("wcsr IE, %0" : : "r" (ie));
+	if (ie & 0x1)
+		mtspr(SPR_SR, mfspr(SPR_SR) | SPR_SR_IEE);
+	else
+		mtspr(SPR_SR, mfspr(SPR_SR) & ~SPR_SR_IEE);
 }
 
 static inline unsigned int irq_getmask(void)
 {
-       unsigned int mask;
-       __asm__ __volatile__("rcsr %0, IM" : "=r" (mask));
-       return mask;
+	return mfspr(SPR_PICMR);
 }
 
 static inline void irq_setmask(unsigned int mask)
 {
-       __asm__ __volatile__("wcsr IM, %0" : : "r" (mask));
+	mtspr(SPR_PICMR, mask);
 }
 
 static inline unsigned int irq_pending(void)
 {
-       unsigned int pending;
-       __asm__ __volatile__("rcsr %0, IP" : "=r" (pending));
-       return pending;
+       return mfspr(SPR_PICSR);
 }
 
 #ifdef __cplusplus

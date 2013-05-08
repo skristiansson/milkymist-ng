@@ -1,4 +1,4 @@
-TARGET_PREFIX=lm32-elf-
+TARGET_PREFIX=or1k-elf-
 
 CC_normal := $(TARGET_PREFIX)gcc
 CX_normal := $(TARGET_PREFIX)g++
@@ -37,8 +37,7 @@ endif
 # Toolchain options
 #
 INCLUDES = -I$(M2DIR)/software/include/base -I$(M2DIR)/software/include -I$(M2DIR)/common
-COMMONFLAGS = -O3 -mbarrel-shift-enabled -mmultiply-enabled -mdivide-enabled -msign-extend-enabled \
-	-Wall -fno-builtin -nostdinc $(INCLUDES)
+COMMONFLAGS = -O3 -mhard-mul -mhard-div	-Wall -fno-builtin -nostdinc $(INCLUDES)
 CFLAGS = $(COMMONFLAGS) -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes
 CXXFLAGS = $(COMMONFLAGS) -fno-exceptions -ffreestanding
 LDFLAGS = -nostdlib -nodefaultlibs
@@ -67,5 +66,5 @@ $(CC) -c $(CFLAGS) $< -o $*.o
 endef
 
 define assemble
-$(AS) -o $*.o $<
+$(CC) -c $(CFLAGS) -o $*.o $<
 endef
